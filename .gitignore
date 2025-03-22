@@ -1,0 +1,45 @@
+venv/
+__pycache__/
+*.ipynb_checkpoints/
+# Environnements virtuels
+.env
+.env-project/
+
+# Fichiers temporaires Jupyter
+.ipynb_checkpoints/
+
+# Données locales (à ignorer si sensibles/temporaires)
+data/
+logs/
+nltk_data/
+
+# Résultats d'expérience (à ignorer si pas utiles pour le versionnement)
+bert_results/
+bert_finetuned_model/
+mlruns/
+mlflow_plots/
+
+# Modèles entraînés
+*.pt
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Cache Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Tests / Coverage (si tu en ajoutes un jour)
+.pytest_cache/
+.coverage
+htmlcov/
