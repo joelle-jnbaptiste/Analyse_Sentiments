@@ -24,7 +24,7 @@ mlflow_plots/
 
 # Fichiers système
 .DS_Store
-Thumbs.db
+
 
 # Cache Python
 __pycache__/
