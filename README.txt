@@ -5,8 +5,21 @@
 mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
 
 # Lancer l'API
-cd .\api\ 
+cd api\ 
 uvicorn main:app --reload 
 
 # Doc Swagger
 http://127.0.0.1:8000/docs#/
+
+#Docker
+## build l'image
+docker build -t myapi-mlflow .
+
+
+#Lancer le container
+docker exec -p 8000:8000 -p 5000:5000 myapi-mlflow
+
+docker start -a sentiment-multiapp
+
+
+docker exec -it 01d1edafd0379d8bcaaccc52698c2334109c0730cce1f223a28ae27d4396802c cat /tmp/logmodel.err.log

@@ -1,0 +1,21 @@
+# Ignorer les fichiers de log
+*.log
+
+# Ignorer les répertoires spécifiques
+node_modules/
+tmp/
+
+# Ignorer les fichiers de configuration
+*.env
+
+# Ignorer le répertoire .git
+.git/
+
+# Ignorer le fichier Dockerfile (si nécessaire)
+Dockerfile
+
+# Ignorer le fichier de configuration des tests
+test/
+
+.ipynb_checkpoints/
+modelisation/
