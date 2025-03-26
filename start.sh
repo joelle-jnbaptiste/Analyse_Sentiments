@@ -1,5 +1,4 @@
 #!/bin/bash
-
 cd /app
 rm -rf mlruns/
 

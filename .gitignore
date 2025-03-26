@@ -20,7 +20,7 @@ mlruns/
 mlflow_plots/
 
 # Modèles entraînés
-*.pt
+modelisation/model/*.pt
 
 # Fichiers système
 .DS_Store
