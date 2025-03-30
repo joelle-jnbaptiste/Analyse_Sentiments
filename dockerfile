@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 
 # Installer supervisord, nginx et les outils nécessaires
-RUN apt-get update && apt-get install -y nginx curl && apt-get clean
+RUN apt-get update && apt-get install -y  openssh-server nginx curl && apt-get clean
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -32,4 +32,5 @@ EXPOSE 80
 # Lancer supervisord pour tout gérer (API + MLflow + Nginx)
 RUN chmod +x /app/start.sh
 RUN ls -l /app
+RUN mkdir /var/run/sshd
 CMD ["/app/start.sh"]
