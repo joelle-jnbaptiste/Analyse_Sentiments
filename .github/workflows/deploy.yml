@@ -36,7 +36,7 @@ jobs:
         az webapp config container set \
           --name mon-app-sentiment \
           --resource-group Openclassroom \
-          --docker-custom-image-name mlflowapi.azurecr.io/sentiment-api:{{ github.sha }} \
+          --docker-custom-image-name mlflowapi.azurecr.io/sentiment-api:${{ github.sha }} \
           --docker-registry-server-url https://mlflowapi.azurecr.io \
           --docker-registry-server-user ${{ secrets.AZURE_ACR_USERNAME }} \
           --docker-registry-server-password ${{ secrets.AZURE_ACR_PASSWORD }}
