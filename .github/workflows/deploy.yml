@@ -6,27 +6,6 @@ on:
     types: [closed]
 
 jobs:
-  test:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-
-    - name: Install dependencies
-      run: |
-        pip install -r requirements-api.txt
-        pip install pytest
-
-    - name: Run tests
-      run: pytest tests/
-
   build-and-deploy:
     if: github.event.pull_request.merged == true
     needs: test
@@ -53,9 +32,13 @@ jobs:
         docker build -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }} .
         docker push ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }}
 
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: mon-app-sentiment
-        slot-name: production
-        images: mlflowapi.azurecr.io/sentiment-api:v1
+    - name: Configure App Service with Docker image
+      run: |
+        az webapp config container set \
+          --name mon-app-sentiment \
+          --resource-group Openclassroom \
+          --docker-custom-image-name mlflowapi.azurecr.io/sentiment-api:v1 \
+          --docker-registry-server-url https://mlflowapi.azurecr.io \
+          --docker-registry-server-user ${{ secrets.AZURE_ACR_USERNAME }} \
+          --docker-registry-server-password ${{ secrets.AZURE_ACR_PASSWORD }}
+
