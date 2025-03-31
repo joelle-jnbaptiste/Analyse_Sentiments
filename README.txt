@@ -1,3 +1,5 @@
+![Deploy to Azure](https://github.com/joelle-jnbaptiste/Analyse_Sentiments/actions/workflows/deploy.yml/badge.svg)
+
 # Lancer l'environnement:
 .\.env-project\Scripts\activate
 
