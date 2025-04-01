@@ -28,6 +28,5 @@ jobs:
           --location francecentral \
           --ingress external \
           --target-port 8000 \
-          --source . \
-          --env-vars ENV=prod \
-          --runtime python
+          --source .
+
