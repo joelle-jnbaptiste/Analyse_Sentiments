@@ -31,10 +31,13 @@ jobs:
         docker build -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }} .
         docker push ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }}
 
+    - name: Wait for image to propagate
+      run: sleep 40
+      
     - name: Deploy to Azure Container App
       run: |
           az containerapp update \
           --name web-api-sentiment \
           --resource-group Openclassroom \
-          --image ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:l${{ github.sha }} 
+          --image ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }} 
 
