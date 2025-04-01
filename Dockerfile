@@ -22,4 +22,4 @@ COPY api /app/api/
 EXPOSE 8000
 
 # 4. Lancer l'application FastAPI avec Uvicorn
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4" ]
