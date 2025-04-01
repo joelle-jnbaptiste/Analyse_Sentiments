@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 
 # Installer supervisord, nginx et les outils nécessaires
-RUN apt-get update && apt-get install -y  openssh-server curl && apt-get clean
+RUN apt-get update && apt-get clean
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -22,4 +22,4 @@ COPY api /app/api/
 EXPOSE 8000
 
 # 4. Lancer l'application FastAPI avec Uvicorn
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
