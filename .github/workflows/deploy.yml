@@ -7,37 +7,27 @@ on:
 
 jobs:
   build-and-deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Azure Login
+    - name: Azure login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Log in to Azure Container Registry (ACR)
-      uses: azure/docker-login@v1
-      with:
-        login-server: ${{ secrets.AZURE_ACR_NAME }}.azurecr.io
-        username: ${{ secrets.AZURE_ACR_USERNAME }}
-        password: ${{ secrets.AZURE_ACR_PASSWORD }}
-
-    - name: Build and push Docker image
+    - name: Deploy to Azure Container Apps
       run: |
-        docker build -t ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }} .
-        docker push ${{ secrets.AZURE_ACR_NAME }}.azurecr.io/sentiment-api:${{ github.sha }}
-
-    - name: Configure App Service with Docker image
-      run: |
-        az webapp config container set \
-          --name mon-app-sentiment \
+        az config set extension.use_dynamic_install=yes_without_prompt
+        
+        az containerapp up \
+          --name web-api-sentiment \
           --resource-group Openclassroom \
-          --docker-custom-image-name mlflowapi.azurecr.io/sentiment-api:${{ github.sha }} \
-          --docker-registry-server-url https://mlflowapi.azurecr.io \
-          --docker-registry-server-user ${{ secrets.AZURE_ACR_USERNAME }} \
-          --docker-registry-server-password ${{ secrets.AZURE_ACR_PASSWORD }}
-
+          --location francecentral \
+          --ingress external \
+          --target-port 8000 \
+          --source . \
+          --env-vars ENV=prod \
+          --runtime python
