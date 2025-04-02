@@ -13,7 +13,7 @@ class DistilBertPyFunc(mlflow.pyfunc.PythonModel):
         self.model.resize_token_embeddings(len(self.tokenizer))
 
         model_path = context.artifacts["state_dict"]
-        state_dict = torch.load(model_path, map_location=torch.device("cpu"))
+        state_dict = torch.load(model_path, map_location=torch.device("cpu"), weights_only=True)
         self.model.load_state_dict(state_dict)
         self.model.eval()
 
