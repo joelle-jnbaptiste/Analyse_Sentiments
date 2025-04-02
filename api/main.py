@@ -22,7 +22,7 @@ class TextInput(BaseModel):
 # Feedback après la prédiction
 class FeedbackRequest(BaseModel):
     texte: str
-    prediction: str
+    prediction: int
     feedback_correct: bool
 
 
@@ -38,7 +38,7 @@ def predict(input: TextInput):
 
 @app.post("/feedback")
 def feedback(data: FeedbackRequest):
-    logger.info("Feedback reçu", extra={
+    logger.info("FeedbackLog", extra={
 
             "texte": data.texte,
             "prediction": data.prediction,
