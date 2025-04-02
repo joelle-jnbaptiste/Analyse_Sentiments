@@ -1,7 +1,7 @@
 FROM python:3.9-slim
 
 # Installer supervisord, nginx et les outils nécessaires
-RUN apt-get update && apt-get clean
+RUN apt-get update && apt-get clean && apt-get install -y ca-certificates
 
 # Définir le répertoire de travail
 WORKDIR /app

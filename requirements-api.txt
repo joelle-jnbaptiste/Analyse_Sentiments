@@ -7,3 +7,4 @@ uvicorn[standard]
 pytest[standard]
 jinja2
 python-multipart
+azure-monitor-opentelemetry
