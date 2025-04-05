@@ -1,27 +1,23 @@
-# model_final/model_loader.py
-import torch
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import TFDistilBertForSequenceClassification, DistilBertTokenizerFast
+import tensorflow as tf
+import os
 
 class SentimentModel:
-    def __init__(self, model_path: str = "model_final/DISTILBERT_MODEL_FULLY_TRAINED.pt"):
-        self.tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
-        self.tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
-        if "<OOV>" not in self.tokenizer.get_vocab():
-            self.tokenizer.add_tokens(["<OOV>"])
-        self.model = AutoModelForSequenceClassification.from_pretrained(
-            "distilbert-base-uncased", num_labels=2
-        )
-        self.model.resize_token_embeddings(len(self.tokenizer))
-        state_dict = torch.load(model_path, map_location=torch.device("cpu"))
-        self.model.load_state_dict(state_dict)
-        self.model.eval()
-
+    def __init__(self):
+        # Dossier contenant le modèle TensorFlow et le tokenizer
+        model_path = os.path.join(os.path.dirname(__file__), "DISTILBERT_MODEL_TF_FULL")
+        
+        # Chargement du tokenizer et du modèle
+        self.tokenizer = DistilBertTokenizerFast.from_pretrained(model_path)
+        self.model = TFDistilBertForSequenceClassification.from_pretrained(model_path)
+    
     def predict(self, texts):
-        inputs = self.tokenizer(
-            texts, return_tensors="pt", padding=True, truncation=True
-        )
-        with torch.no_grad():
-            outputs = self.model(**inputs)
-            logits = outputs.logits
-            preds = torch.argmax(logits, dim=1)
-        return preds.numpy()
+        # Tokenisation
+        inputs = self.tokenizer(texts, return_tensors="tf", padding=True, truncation=True)
+
+        # Prédiction sans gradients
+        outputs = self.model(inputs)
+        logits = outputs.logits
+        predictions = tf.argmax(logits, axis=1)
+
+        return predictions.numpy().tolist()
