@@ -3,8 +3,8 @@ FROM python:3.9-slim
 # Installer supervisord, nginx et les outils nécessaires
 RUN apt-get update && apt-get clean && apt-get install -y ca-certificates  git-lfs && git lfs install
 
-# Définir le répertoire de travail
-RUN git clone --branch ton-branche https://github.com/joelle-jnbaptiste/Analyse_Sentiments.git /app  
+ARG GITHUB_TOKEN
+RUN git clone https://${GITHUB_TOKEN}@github.com/joelle-jnbaptiste/Analyse_Sentiments.git /app 
 
 WORKDIR /app
 
