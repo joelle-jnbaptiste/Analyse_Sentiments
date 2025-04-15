@@ -1,4 +1,4 @@
-from Analyse_Sentiments.model_final.model_loader import SentimentModel
+from model_final.model_loader import SentimentModel
 
 def test_model_prediction():
     model = SentimentModel()
