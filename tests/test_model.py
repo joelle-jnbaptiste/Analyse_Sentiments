@@ -2,7 +2,7 @@ from model_final.model_loader import SentimentModel
 
 def test_model_prediction():
     model = SentimentModel()
-    sample_input = ["ce film était incroyable"]
+    sample_input = ["It was amazing"]
     prediction = model.predict(sample_input)
     
     assert isinstance(prediction, list)
